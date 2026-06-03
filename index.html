@@ -5,29 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lyromi AI</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
-        <!-- THE SIDEBAR (Chat History) -->
+        <!-- SIDEBAR -->
         <aside id="sidebar" class="sidebar">
-            <div class="sidebar-header">
-                <button id="close-sidebar">✕</button>
-                <button class="new-chat-btn" onclick="location.reload()">+ New Chat</button>
+            <div class="sidebar-top">
+                <div class="sidebar-header">
+                    <button id="close-sidebar">✕</button>
+                </div>
+                <button class="new-chat-btn" onclick="clearHistory()">+ New Chat</button>
+                <div id="history-list"></div>
             </div>
-            <div id="history-list" class="history-list">
-                <!-- Past chats will appear here -->
-            </div>
-            <div class="sidebar-footer">
-                <span>Built by Emmanuella</span>
-            </div>
+            <!-- FOOTER AT THE BOTTOM -->
+            <div class="sidebar-footer">Built by Emmanuella</div>
         </aside>
 
         <main class="main-body">
-            <!-- TOP NAV -->
             <header class="android-nav">
                 <div class="nav-left">
-                    <button id="open-sidebar">☰</button> <!-- THREE LINES -->
+                    <button id="open-sidebar">☰</button>
                     <span>Lyromi</span>
                 </div>
                 <div class="nav-right">
@@ -35,25 +33,23 @@
                 </div>
             </header>
 
-            <!-- WELCOME AREA -->
             <div id="welcome-screen">
-                <h1 class="gradient-text">Hello, Lyromi here</h1>
-                <p>What shall we create today, Emmanuella?</p>
+                <h1 class="gradient-text">Hello, I am Lyromi</h1>
+                <p>How can I help you today, Emmanuella?</p>
             </div>
 
-            <!-- CHAT AREA -->
             <div id="chat-display"></div>
 
-            <!-- INPUT AREA -->
             <div class="input-area">
                 <div class="input-pill">
+                    <button id="voice-btn" title="Voice Input">🎤</button>
                     <input type="text" id="user-input" placeholder="Message Lyromi..." autocomplete="off">
                     <button id="send-btn">↑</button>
                 </div>
             </div>
         </main>
     </div>
-    <div id="overlay"></div> <!-- Darkens screen when sidebar is open -->
+    <div id="overlay"></div>
     <script src="app.js"></script>
 </body>
 </html>
