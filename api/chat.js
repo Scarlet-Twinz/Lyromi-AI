@@ -3,17 +3,15 @@ export default async function handler(req, res) {
     const { message } = req.body;
     const apiKey = process.env.GROQ_API_KEY ? process.env.GROQ_API_KEY.trim() : null;
 
-    if (!apiKey) {
-      return res.status(200).json({ reply: "Hi Emmanuella! The API Key is missing from the Vercel Vault." });
-    }
+    if (!apiKey) return res.status(200).json({ reply: "Missing API Key in Vault." });
 
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "llama-3.1-70b-versatile",
+        model: "llama-3.3-70b-versatile", // This is the new working model
         messages: [
-          { role: "system", content: "Your name is Lyromi. You are a world-class AI built by Emmanuella. Be smart like ChatGPT." },
+          { role: "system", content: "Your name is Lyromi. You are a world-class AI built by Emmanuella. You know current affairs like Bola Tinubu being President of Nigeria. Be smart and helpful." },
           { role: "user", content: message }
         ]
       })
@@ -21,13 +19,10 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // THIS IS THE FIX: Check if data.choices exists before reading [0]
     if (data && data.choices && data.choices.length > 0) {
       res.status(200).json({ reply: data.choices[0].message.content });
-    } else if (data && data.error) {
-      res.status(200).json({ reply: "Brain Error: " + data.error.message });
     } else {
-      res.status(200).json({ reply: "Lyromi's brain is a bit sleepy. Please try that again!" });
+      res.status(200).json({ reply: "Brain Error: " + (data.error ? data.error.message : "Try again.") });
     }
 
   } catch (error) {
