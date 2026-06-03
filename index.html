@@ -9,33 +9,34 @@
 </head>
 <body>
     <div class="app-shell">
-        <aside id="sidebar" class="glass-sidebar">
+        <aside id="sidebar" class="sidebar">
             <div class="sidebar-top">
-                <button id="close-sidebar" class="icon-btn">✕</button>
-                <button class="new-chat-btn" onclick="location.reload()">+ New Chat</button>
+                <button id="close-sidebar">✕</button>
+                <button class="new-chat" onclick="location.reload()">+ New Chat</button>
             </div>
-            <div id="history-list"></div>
             <div class="sidebar-footer">Built by Emmanuella</div>
         </aside>
 
-        <main class="main-stage">
+        <main class="main-content">
             <header class="top-nav">
-                <button id="open-sidebar" class="icon-btn">☰</button>
-                <div class="brand">Lyromi</div>
-                <div class="user-avatar">E</div>
+                <button id="open-sidebar">☰</button>
+                <div class="nav-brand">Lyromi</div>
+                <div class="profile-icon">E</div>
             </header>
 
+            <!-- BIG SPACIOUS WELCOME SCREEN -->
             <div id="welcome-screen">
-                <h1 class="hero-text">Hello, Emmanuella</h1>
-                <p class="sub-hero">How can I assist you today?</p>
+                <h1 class="big-text">Hello, Emmanuella</h1>
+                <p class="sub-text">How can I assist you today?</p>
             </div>
 
             <div id="chat-window"></div>
 
-            <div class="input-wrapper">
-                <div class="pill-container">
-                    <button id="voice-btn" class="mic-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+            <div class="input-area">
+                <div class="input-pill">
+                    <!-- PRO MODERN MIC ICON -->
+                    <button id="voice-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                     </button>
                     <input type="text" id="user-input" placeholder="Ask Lyromi anything..." autocomplete="off">
                     <button id="send-btn">↑</button>
