@@ -9,46 +9,39 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- SIDEBAR: Permanent on Laptops -->
+        <!-- PERMANENT SIDEBAR FOR LAPTOP -->
         <aside class="sidebar">
-            <div class="sidebar-top">
-                <button class="new-chat-btn" onclick="location.reload()">+ New Chat</button>
-            </div>
-            <div id="history-list" class="history-list">
-                <!-- History items will appear here -->
-            </div>
-            <div class="sidebar-footer">
-                <p>Built by Emmanuella</p>
-            </div>
+            <button class="new-chat-btn" onclick="location.reload()">+ New Chat</button>
+            <div id="history-list" class="history-area"></div>
+            <div class="sidebar-footer">Built by Emmanuella</div>
         </aside>
 
         <main class="chat-main">
-            <!-- Mobile Navigation (Hidden on Laptop) -->
-            <header class="mobile-nav">
-                <button id="menu-toggle">☰</button>
-                <span>Lyromi</span>
-                <div class="user-initial">E</div>
+            <!-- HEADER -->
+            <header class="top-nav">
+                <button id="menu-toggle" class="mobile-only">☰</button>
+                <span class="brand-name">Lyromi</span>
+                <div class="user-avatar">E</div>
             </header>
 
-            <!-- BIG SPACIOUS WELCOME -->
-            <div id="welcome-screen" class="welcome-container">
-                <h1 class="hero-title">Hello, scarlet</h1>
-                <p class="hero-subtitle">How can I assist you today?</p>
+            <!-- BIG WELCOME -->
+            <div id="welcome-screen">
+                <h1 class="hero-text">Hello, Emmanuella</h1>
+                <p>How can I assist you today?</p>
             </div>
 
             <!-- CHAT AREA -->
             <div id="chat-window"></div>
 
-            <!-- THE PILL INPUT -->
-            <div class="input-container">
-                <div class="pill-box">
-                    <button id="voice-btn" class="mic-btn">
+            <!-- PILL INPUT -->
+            <div class="bottom-bar">
+                <div class="input-pill">
+                    <button id="voice-btn">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                     </button>
                     <input type="text" id="user-input" placeholder="Ask Lyromi anything..." autocomplete="off">
-                    <button id="send-btn" class="send-arrow">↑</button>
+                    <button id="send-btn">↑</button>
                 </div>
-                <p class="disclaimer">Lyromi can make mistakes. Verify important info.</p>
             </div>
         </main>
     </div>
