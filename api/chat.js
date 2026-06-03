@@ -1,73 +1,31 @@
-const sendBtn = document.getElementById('send-btn');
-const userInput = document.getElementById('user-input');
-const chatWindow = document.getElementById('chat-window');
-const welcomeScreen = document.getElementById('welcome-screen');
-const voiceBtn = document.getElementById('voice-btn');
+export default async function handler(req, res) {
+  try {
+    const { message } = req.body;
+    const apiKey = process.env.GROQ_API_KEY ? process.env.GROQ_API_KEY.trim() : null;
 
-// --- SIDEBAR ---
-document.getElementById('open-sidebar').onclick = () => document.getElementById('sidebar').classList.add('open');
-document.getElementById('close-sidebar').onclick = () => document.getElementById('sidebar').classList.remove('open');
+    if (!apiKey) return res.status(200).json({ reply: "Missing API Key in Vercel Vault." });
 
-// --- VOICE (STT & TTS) ---
-const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-voiceBtn.onclick = () => { recognition.start(); voiceBtn.classList.add('active'); };
-recognition.onresult = (e) => {
-    userInput.value = e.results[0][0].transcript;
-    voiceBtn.classList.remove('active');
-    sendBtn.click();
-};
-function speak(text) {
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = 1.1; 
-    window.speechSynthesis.speak(u);
-}
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "llama-3.1-70b-versatile",
+        messages: [
+          { 
+            role: "system", 
+            content: "Your name is Lyromi. You are a world-class AI built by scarlet. Be smart and helpful like ChatGPT. You know that Bola Ahmed Tinubu is the President of Nigeria (serving since 2023)." 
+          },
+          { role: "user", content: message }
+        ]
+      })
+    });
 
-// --- SEND LOGIC ---
-sendBtn.onclick = async () => {
-    const text = userInput.value;
-    if (!text.trim()) return;
-
-    welcomeScreen.style.display = 'none';
-    chatWindow.style.display = 'flex';
-    renderMsg(text, 'user');
-    userInput.value = "";
-
-    const searching = document.createElement('div');
-    searching.className = 'searching';
-    searching.innerText = "Lyromi is searching and thinking...";
-    chatWindow.appendChild(searching);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-
-    try {
-        // --- IMAGE LOGIC ---
-        if (text.toLowerCase().includes("image") || text.toLowerCase().includes("picture") || text.toLowerCase().includes("draw")) {
-            const prompt = text.replace(/image|picture|draw|show me/gi, "").trim();
-            const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&nologo=true`;
-            setTimeout(() => {
-                searching.remove();
-                renderMsg(`Generated for scarlet:<br><img src="${imgUrl}">`, 'assistant');
-                speak("I have generated your image.");
-            }, 3000);
-            return;
-        }
-
-        // --- BRAIN LOGIC ---
-        const res = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text })
-        });
-        const data = await res.json();
-        searching.remove();
-        renderMsg(data.reply, 'assistant');
-        speak(data.reply);
-    } catch (e) { searching.innerText = "Connection error."; }
-};
-
-function renderMsg(text, role) {
-    const d = document.createElement('div');
-    d.className = `message ${role}`;
-    d.innerHTML = `<div class="bubble">${text}</div>`;
-    chatWindow.appendChild(d);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+    const data = await response.json();
+    res.status(200).json({ reply: data.choices[0].message.content });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }
