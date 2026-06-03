@@ -3,45 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lyromi AI</title>
+    <title>Lyromi AI | Professional</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
-        <!-- PERMANENT SIDEBAR FOR LAPTOP -->
+        <!-- PERMANENT WIDE SIDEBAR -->
         <aside class="sidebar">
-            <button class="new-chat-btn" onclick="location.reload()">+ New Chat</button>
-            <div id="history-list" class="history-area"></div>
-            <div class="sidebar-footer">Built by Emmanuella</div>
+            <div class="sidebar-top">
+                <button class="new-chat-btn" onclick="createNewChat()">+ New Chat</button>
+            </div>
+            <div id="history-list" class="history-list">
+                <!-- Chat history titles will appear here -->
+            </div>
+            <div class="sidebar-footer">
+                <p>Built by Emmanuella</p>
+            </div>
         </aside>
 
-        <main class="chat-main">
-            <!-- HEADER -->
-            <header class="top-nav">
-                <button id="menu-toggle" class="mobile-only">☰</button>
-                <span class="brand-name">Lyromi</span>
+        <main class="chat-area">
+            <!-- MOBILE TOP BAR (Hidden on Laptop) -->
+            <header class="mobile-nav">
+                <button id="menu-toggle">☰</button>
+                <span class="brand">Lyromi</span>
                 <div class="user-avatar">E</div>
             </header>
 
-            <!-- BIG WELCOME -->
+            <!-- BIG SPACIOUS WELCOME -->
             <div id="welcome-screen">
                 <h1 class="hero-text">Hello, Emmanuella</h1>
-                <p>How can I assist you today?</p>
+                <p class="hero-sub">How can I assist you today?</p>
             </div>
 
-            <!-- CHAT AREA -->
+            <!-- CHAT DISPLAY -->
             <div id="chat-window"></div>
 
-            <!-- PILL INPUT -->
-            <div class="bottom-bar">
-                <div class="input-pill">
-                    <button id="voice-btn">
+            <!-- THE PILL INPUT -->
+            <div class="bottom-zone">
+                <div class="pill-input">
+                    <button id="voice-btn" class="icon-btn" title="Speak">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                     </button>
-                    <input type="text" id="user-input" placeholder="Ask Lyromi anything..." autocomplete="off">
-                    <button id="send-btn">↑</button>
+                    <input type="text" id="user-input" placeholder="Message Lyromi..." autocomplete="off">
+                    <button id="send-btn" class="send-icon">↑</button>
                 </div>
+                <p class="disclaimer">Lyromi can make mistakes. Verify important info.</p>
             </div>
         </main>
     </div>
