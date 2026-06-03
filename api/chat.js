@@ -4,6 +4,15 @@ export default async function handler(req, res) {
     const { messages } = req.body;
     const apiKey = process.env.GROQ_API_KEY?.trim();
 
+    // GET THE REAL CURRENT DATE
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
@@ -13,13 +22,13 @@ export default async function handler(req, res) {
           { 
             role: "system", 
             content: `Your name is Lyromi. Built by Emmanuella. 
-            DATE: Wednesday, June 3, 2026. 
-            BEHAVIOR:
+            TODAY'S DATE: ${dateString}. 
+            - You always know the exact current date and time because you check your system clock.
             - You are a world-class AI as smart as Gemini and ChatGPT.
-            - You have perfect context memory. If a user asks a follow-up, answer based on the conversation history.
+            - You have perfect context memory.
             - Speak professionally. Use Markdown for clean formatting (**bold**, lists).
-            - Do NOT introduce yourself or say your name every time. 
-            - Use your knowledge of 2026 leaders only if specifically asked.` 
+            - Do NOT use '*' or '-' for lists. Use clean HTML bullet points.
+            - Use your knowledge of current leaders (Donald Trump, Bola Tinubu, etc.) only if asked.` 
           },
           ...messages 
         ]
@@ -27,5 +36,5 @@ export default async function handler(req, res) {
     });
     const data = await response.json();
     res.status(200).json({ reply: data.choices[0].message.content });
-  } catch (e) { res.status(200).json({ reply: "I'm having trouble connecting to my brain." }); }
+  } catch (e) { res.status(200).json({ reply: "Brain connection error." }); }
 }
