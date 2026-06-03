@@ -3,63 +3,65 @@ const userInput = document.getElementById('user-input');
 const chatDisplay = document.getElementById('chat-display');
 const welcomeScreen = document.getElementById('welcome-screen');
 
-// This function talks to your "Shield" (the api folder)
-async function askLyromi(text) {
-    const response = await fetch('/api/chat', {
+// 1. MEMORY: Load previous chats
+let chatHistory = JSON.parse(localStorage.getItem('lyromi_memory')) || [];
+
+if (chatHistory.length > 0) {
+    welcomeScreen.style.display = 'none';
+    chatDisplay.style.display = 'flex';
+    chatHistory.forEach(msg => renderMessage(msg.text, msg.role));
+}
+
+async function fetchBrainResponse(message) {
+    const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ message })
     });
-    const data = await response.json();
+    const data = await res.json();
     if (data.error) throw new Error(data.error);
     return data.reply;
 }
 
-// This function adds bubbles to the screen
-function addMessage(text, role, id = null) {
-    // Hide welcome screen and show chat
-    welcomeScreen.style.display = 'none';
-    chatDisplay.style.display = 'flex';
-
+function renderMessage(text, role) {
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('message', role);
-    if (id) msgDiv.id = id;
-
-    const icon = role === 'assistant' ? `<img src="logo.png" class="avatar">` : '';
-    
-    msgDiv.innerHTML = `
-        ${icon}
-        <div class="bubble">${text}</div>
-    `;
-
+    msgDiv.innerHTML = `<div class="bubble">${text}</div>`;
     chatDisplay.appendChild(msgDiv);
     chatDisplay.scrollTop = chatDisplay.scrollHeight;
 }
 
-// This happens when you click "Send"
 sendBtn.addEventListener('click', async () => {
     const text = userInput.value;
-    if (text.trim() !== "") {
-        addMessage(text, 'user');
-        userInput.value = "";
-        
-        // 1. Show that Lyromi is thinking
-        const thinkingId = "think-" + Date.now();
-        addMessage("...", 'assistant', thinkingId);
+    if (!text.trim()) return;
 
-        try {
-            // 2. Actually get the answer from the brain
-            const reply = await askLyromi(text);
-            
-            // 3. Replace "..." with the real answer
-            document.getElementById(thinkingId).querySelector('.bubble').innerText = reply;
-        } catch (err) {
-            document.getElementById(thinkingId).querySelector('.bubble').innerText = "I'm sorry Emmanuella, I'm having trouble connecting to my brain.";
-        }
+    // Show Chat UI
+    welcomeScreen.style.display = 'none';
+    chatDisplay.style.display = 'flex';
+
+    // User Message
+    renderMessage(text, 'user');
+    userInput.value = "";
+    
+    // Save to Memory
+    chatHistory.push({ text, role: 'user' });
+
+    // Assistant Thinking
+    const thinkingDiv = document.createElement('div');
+    thinkingDiv.classList.add('message', 'assistant');
+    thinkingDiv.innerHTML = `<div class="bubble">...</div>`;
+    chatDisplay.appendChild(thinkingDiv);
+
+    try {
+        const reply = await fetchBrainResponse(text);
+        thinkingDiv.querySelector('.bubble').innerText = reply;
+        
+        // Save to Memory
+        chatHistory.push({ text: reply, role: 'assistant' });
+        localStorage.setItem('lyromi_memory', JSON.stringify(chatHistory));
+    } catch (err) {
+        thinkingDiv.querySelector('.bubble').innerText = "Connection lost. Try again!";
     }
 });
 
-// Allow "Enter" key
-userInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendBtn.click();
-});
+userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendBtn.click(); });
