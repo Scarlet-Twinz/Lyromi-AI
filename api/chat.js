@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         messages: [
           { 
             role: "system", 
-            content: "Your name is Lyromi. You are a world-class AI built by scarlet. Be smart and helpful like ChatGPT. You know that Bola Ahmed Tinubu is the President of Nigeria (serving since 2023)." 
+            content: "Your name is Lyromi. You are a world-class AI built by Emmanuella. Be smart and helpful like ChatGPT. You know that Bola Ahmed Tinubu is the President of Nigeria (serving since 2023)." 
           },
           { role: "user", content: message }
         ]
