@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="app-shell">
+        <!-- PERMANENT WIDE SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-top">
                 <button class="new-chat-btn" onclick="startNewChat()">+ New Chat</button>
@@ -21,27 +22,29 @@
             <header class="top-nav">
                 <button id="menu-toggle" class="mobile-only">☰</button>
                 <span class="logo-text">Lyromi</span>
-                <div class="user-circle">E</div>
+                <button class="login-btn">Sign In</button>
             </header>
 
-            <div id="welcome-screen" class="welcome-box">
+            <div id="welcome-screen">
                 <h1 class="hero-text">Hello, Emmanuella</h1>
                 <p class="hero-sub">How can I assist you today?</p>
             </div>
 
             <div id="chat-window"></div>
 
+            <!-- SPEAKING INDICATOR (Greater than/Less than) -->
+            <div id="speaking-indicator" class="speaking-ui">< > Lyromi is speaking...</div>
+
             <div class="bottom-area">
-                <!-- MULTIMEDIA MENU -->
                 <div id="media-menu" class="media-popover">
-                    <button onclick="alert('Camera coming soon!')">📷 Camera</button>
-                    <button onclick="alert('Video coming soon!')">🎥 Video</button>
+                    <button onclick="openCamera()">📷 Camera</button>
+                    <button onclick="openVideo()">🎥 Video</button>
                     <button onclick="document.getElementById('file-input').click()">📁 Files</button>
                     <input type="file" id="file-input" style="display:none" onchange="handleFileUpload(this)">
                 </div>
 
-                <div class="pill-wrapper">
-                    <button id="plus-btn" class="action-btn" onclick="toggleMediaMenu()">+</button>
+                <div class="pill-input">
+                    <button class="action-btn" onclick="toggleMediaMenu()">+</button>
                     <button id="voice-btn" class="action-btn">
                         <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                     </button>
