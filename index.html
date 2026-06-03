@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lynomi AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="logo.png" alt="Lynomi" class="logo">
+                <span>Lynomi</span>
+            </div>
+            <button class="new-chat-btn">+ New Chat</button>
+        </aside>
+
+        <!-- Main Area -->
+        <main class="main-content">
+            <!-- BIG WELCOME SCREEN (Gemini Style) -->
+            <div id="welcome-screen">
+                <h1 class="gradient-text">Hello, I am Lynomi</h1>
+                <p>How can I help you today?</p>
+            </div>
+
+            <!-- CHAT DISPLAY (Wide and clean) -->
+            <div id="chat-display"></div>
+
+            <!-- INPUT BOX -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <input type="text" id="user-input" placeholder="Type a message..." autocomplete="off">
+                    <button id="send-btn">↑</button>
+                </div>
+                <p class="disclaimer">Lynomi can make mistakes. Verify important info.</p>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
