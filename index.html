@@ -9,34 +9,51 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Android Style Header -->
-        <header class="android-nav">
-            <div class="nav-left">
-                <img src="logo.png" class="nav-logo">
-                <span>Lyromi</span>
+        <!-- THE SIDEBAR (Chat History) -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <button id="close-sidebar">✕</button>
+                <button class="new-chat-btn" onclick="location.reload()">+ New Chat</button>
             </div>
-            <div class="nav-right">
-                <button class="menu-btn">⋮</button>
+            <div id="history-list" class="history-list">
+                <!-- Past chats will appear here -->
             </div>
-        </header>
+            <div class="sidebar-footer">
+                <span>Built by Emmanuella</span>
+            </div>
+        </aside>
 
         <main class="main-body">
+            <!-- TOP NAV -->
+            <header class="android-nav">
+                <div class="nav-left">
+                    <button id="open-sidebar">☰</button> <!-- THREE LINES -->
+                    <span>Lyromi</span>
+                </div>
+                <div class="nav-right">
+                    <button class="menu-dots">⋮</button>
+                </div>
+            </header>
+
+            <!-- WELCOME AREA -->
             <div id="welcome-screen">
-                <h1 class="gradient-text">Hello, I am Lyromi</h1>
-                <p>How can I help you today, Emmanuella?</p>
+                <h1 class="gradient-text">Hello, Lyromi here</h1>
+                <p>What shall we create today, Emmanuella?</p>
             </div>
 
+            <!-- CHAT AREA -->
             <div id="chat-display"></div>
 
+            <!-- INPUT AREA -->
             <div class="input-area">
                 <div class="input-pill">
                     <input type="text" id="user-input" placeholder="Message Lyromi..." autocomplete="off">
                     <button id="send-btn">↑</button>
                 </div>
-                <p class="footer-tag">Built by Emmanuella</p>
             </div>
         </main>
     </div>
+    <div id="overlay"></div> <!-- Darkens screen when sidebar is open -->
     <script src="app.js"></script>
 </body>
 </html>
