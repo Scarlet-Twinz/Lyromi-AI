@@ -4,19 +4,19 @@ const chatWindow = document.getElementById('chat-window');
 const welcomeScreen = document.getElementById('welcome-screen');
 const voiceBtn = document.getElementById('voice-btn');
 
-// --- FEMALE VOICE LOGIC ---
+// --- FEMALE VOICE ---
 function speak(text) {
     const u = new SpeechSynthesisUtterance(text);
     const voices = window.speechSynthesis.getVoices();
-    // Logic to pick a female voice from your computer/browser
-    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Woman') || v.name.includes('Google UK English Female') || v.name.includes('Zira'));
-    if (femaleVoice) u.voice = femaleVoice;
-    u.pitch = 1.2; // Higher pitch for feminine tone
+    // Look for female sounding voices
+    const female = voices.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('woman') || v.name.toLowerCase().includes('google uk english female') || v.name.toLowerCase().includes('zira'));
+    if (female) u.voice = female;
+    u.pitch = 1.2;
     u.rate = 1.0;
     window.speechSynthesis.speak(u);
 }
 
-// --- VOICE INPUT ---
+// --- MIC LOGIC ---
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 voiceBtn.onclick = () => { recognition.start(); voiceBtn.classList.add('active'); };
 recognition.onresult = (e) => { 
@@ -25,7 +25,7 @@ recognition.onresult = (e) => {
     sendBtn.click(); 
 };
 
-// --- MAIN AI LOGIC (FIXED ERROR) ---
+// --- SENDING LOGIC ---
 sendBtn.onclick = async () => {
     const text = userInput.value;
     if (!text.trim()) return;
@@ -63,13 +63,12 @@ sendBtn.onclick = async () => {
         const data = await res.json();
         think.remove();
         
-        // Error fix: Use data.reply which our api/chat.js now sends
-        const finalReply = data.reply || "I'm sorry, I'm having trouble thinking. Try again!";
+        const finalReply = data.reply || "I'm sorry, try again!";
         renderMsg(finalReply, 'assistant');
         speak(finalReply);
 
     } catch (e) {
-        if (think) think.innerText = "Connection lost.";
+        if (think) think.innerText = "Connection error.";
     }
 };
 
