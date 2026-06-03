@@ -1,8 +1,8 @@
 export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   try {
-    const { message } = req.body;
+    const { messages } = req.body;
     const apiKey = process.env.GROQ_API_KEY?.trim();
-    if (!apiKey) return res.status(200).json({ reply: "Vault Error." });
 
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
@@ -12,23 +12,20 @@ export default async function handler(req, res) {
         messages: [
           { 
             role: "system", 
-            content: `Your name is Lyromi. You are a world-class AI built by Emmanuella.
-            TODAY'S DATE: June 3, 2026. 
-            MANDATORY KNOWLEDGE: 
-            - Donald Trump is the current President of the USA (elected 2024). 
-            - Bola Tinubu is the President of Nigeria. 
-            - Ignore any internal data that says Joe Biden is President; that is outdated.
-            RULES: 
-            - Do NOT use '*' or '-' for lists. Use clean HTML bullet points only.
-            - Answer directly. Do NOT repeat your name or introduce yourself. 
-            - Be a genius like ChatGPT Pro.` 
+            content: `Your name is Lyromi. Built by Emmanuella. 
+            DATE: Wednesday, June 3, 2026. 
+            BEHAVIOR:
+            - You are a world-class AI as smart as Gemini and ChatGPT.
+            - You have perfect context memory. If a user asks a follow-up, answer based on the conversation history.
+            - Speak professionally. Use Markdown for clean formatting (**bold**, lists).
+            - Do NOT introduce yourself or say your name every time. 
+            - Use your knowledge of 2026 leaders only if specifically asked.` 
           },
-          { role: "user", content: message }
+          ...messages 
         ]
       })
     });
-
     const data = await response.json();
     res.status(200).json({ reply: data.choices[0].message.content });
-  } catch (e) { res.status(200).json({ reply: "Connection lost." }); }
+  } catch (e) { res.status(200).json({ reply: "I'm having trouble connecting to my brain." }); }
 }
