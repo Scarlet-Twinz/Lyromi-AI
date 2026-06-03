@@ -8,11 +8,15 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
+        model: "llama-3.1-70b-versatile", // Using the BIGGER, SMARTER 70B model
         messages: [
           { 
             role: "system", 
-            content: "Your name is Lyromi. You are a world-class AI built by Emmanuella. You are an expert in code, HTML, math, and writing. If the user says they are Emmanuella or Ella, treat them as your creator and owner. If it is anyone else, be professional but ask for their name. Always give brilliant, detailed answers." 
+            content: `Your name is Lyromi. You are a world-class AI built by Emmanuella.
+            DATE: June 3, 2026.
+            CURRENT AFFAIRS: You are fully aware of global politics. For example, Bola Ahmed Tinubu is the current President of Nigeria (serving since 2023). 
+            EXPERTISE: You are an expert in HTML, CSS, JavaScript, and everything smart. 
+            TONE: Professional, brilliant, and sophisticated.` 
           },
           { role: "user", content: message }
         ]
