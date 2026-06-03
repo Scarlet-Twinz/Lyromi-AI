@@ -3,39 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lynomi AI</title>
+    <title>Lyromi AI</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="brand">
-                <img src="logo.png" alt="Lynomi" class="logo">
-                <span>Lynomi</span>
+        <!-- Android Style Header -->
+        <header class="android-nav">
+            <div class="nav-left">
+                <img src="logo.png" class="nav-logo">
+                <span>Lyromi</span>
             </div>
-            <button class="new-chat-btn">+ New Chat</button>
-        </aside>
+            <div class="nav-right">
+                <button class="menu-btn">⋮</button>
+            </div>
+        </header>
 
-        <!-- Main Area -->
-        <main class="main-content">
-            <!-- BIG WELCOME SCREEN (Gemini Style) -->
+        <main class="main-body">
             <div id="welcome-screen">
-                <h1 class="gradient-text">Hello, I am Lynomi</h1>
-                <p>How can I help you today?</p>
+                <h1 class="gradient-text">Hello, I am Lyromi</h1>
+                <p>How can I help you today, Emmanuella?</p>
             </div>
 
-            <!-- CHAT DISPLAY (Wide and clean) -->
             <div id="chat-display"></div>
 
-            <!-- INPUT BOX -->
-            <div class="input-container">
-                <div class="input-wrapper">
-                    <input type="text" id="user-input" placeholder="Type a message..." autocomplete="off">
+            <div class="input-area">
+                <div class="input-pill">
+                    <input type="text" id="user-input" placeholder="Message Lyromi..." autocomplete="off">
                     <button id="send-btn">↑</button>
                 </div>
-                <p class="disclaimer">Lynomi can make mistakes. Verify important info.</p>
+                <p class="footer-tag">Built by Emmanuella</p>
             </div>
         </main>
     </div>
